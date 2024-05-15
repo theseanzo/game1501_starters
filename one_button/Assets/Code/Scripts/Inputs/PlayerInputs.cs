@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,12 +14,13 @@ public class PlayerInputs : MonoBehaviour
     private UnityEvent<ButtonInfo> _buttonReleased;
     private UnityEvent<ButtonInfo> _buttonPressed;
     public List<ButtonInfo> _buttonInputs = new List<ButtonInfo>();
-
+    private Coroutine _buttonHeldRoutine;
     public void Awake()
     {
         _buttonHeld = new UnityEvent<ButtonInfo>();
         _buttonReleased = new UnityEvent<ButtonInfo>();
         _buttonPressed = new UnityEvent<ButtonInfo>();
+        
     }
     public void OnEnable()
     {
@@ -47,6 +49,11 @@ public class PlayerInputs : MonoBehaviour
         _gameInputs.PlayerControl.Enable();
     }
 
+    private void OnDestroy()
+    {
+        _gameInputs?.Disable();
+    }
+
     public void RegisterListener(IButtonListener buttonListener)
     {
         _buttonPressed.AddListener(buttonListener.ButtonPressed);
@@ -61,7 +68,7 @@ public class PlayerInputs : MonoBehaviour
     }
     IEnumerator ButtonHeld()
     {
-        while (true)
+        while (true && _gameInputs != null)
         {
             _currentButton.CurrentState = ButtonState.Held;
             _currentButton.CurrentTime = Time.time;
