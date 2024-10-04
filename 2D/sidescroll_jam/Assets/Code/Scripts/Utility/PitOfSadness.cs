@@ -14,7 +14,7 @@ namespace Code.Scripts.Utility
         {
             if (other.gameObject.GetComponent<PlayerController>())
             {
-                Destroy(other.gameObject);
+                ((PlayerController)other.gameObject.GetComponent<PlayerController>()).Death();
                 Invoke("Respawn", _timeToRespawn);
                 
             }

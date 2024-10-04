@@ -120,12 +120,25 @@ namespace Code.Scripts.Player
         protected override void Update()
         {
             base.Update();
+            EventData.HandlePlayerUpdate(this);
         }
         protected override void FixedUpdate()
         {
             base.FixedUpdate();
             this.GetComponent<SpriteRenderer>().flipX = RB.velocity.x < -0.02f;
 
+        }
+
+        public void Death()
+        {
+            RB.constraints = RigidbodyConstraints2D.FreezeAll;
+            Invoke("ActualDeath", Data.PlayerDeathDelay);
+        }
+
+        private void ActualDeath()
+        {
+            EventData.HandlePlayerDeath(this);
+            Destroy(this);
         }
     }
 }
