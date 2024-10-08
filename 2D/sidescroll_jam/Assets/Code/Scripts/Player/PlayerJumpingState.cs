@@ -10,8 +10,8 @@ namespace Code.Scripts.Player
         }
         public override void Enter()
         {
-            
             _player.Data.GravityMultiplier = _player.Data.DefaultGravityScale;
+            this.SetPhysics();
             var jumpSpeed = Mathf.Sqrt(-2f * Physics2D.gravity.y * _player.RB.gravityScale * _player.Data.JumpHeight);
             _player.Data.IsJumping = true;
             _player.DelayGroundCheck();
