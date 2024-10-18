@@ -20,6 +20,11 @@ namespace Code.Scripts.FixedControl
             }
             _fixedControlInput.Enable();
         }
+
+        private void OnDisable()
+        {
+            _fixedControlInput.Disable();
+        }
     }
 }
 

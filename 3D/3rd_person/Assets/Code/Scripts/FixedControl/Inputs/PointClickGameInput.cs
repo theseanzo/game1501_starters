@@ -22,4 +22,9 @@ public class PointClickGameInput : MonoBehaviour
         }
         _pointClickInput.Enable();
     }
+
+    private void OnDisable()
+    {
+        _pointClickInput.Disable();
+    }
 }
